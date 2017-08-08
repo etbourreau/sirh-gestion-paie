@@ -20,6 +20,10 @@ public class ResultatCalculRemuneration {
 		this.netAPayer = netAPayer;
 	}
 
+	public ResultatCalculRemuneration() {
+		super();
+	}
+
 	public String getSalaireDeBase() {
 		return salaireDeBase;
 	}
