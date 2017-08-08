@@ -6,6 +6,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+	<import resource="classpath:cotisations-non-imposables.xml" />
+	<import resource="classpath:cotisations-imposables.xml" />
+
 	<bean id="profilRemuneration1" class="dev.paie.entite.ProfilRemuneration">
 		<property name="cotisationsNonImposables">
 			<util:list value-type="dev.paie.entite.Cotisation">
@@ -40,8 +43,5 @@
 	<bean id="remunerationEmploye1" class="dev.paie.entite.RemunerationEmploye" p:matricule="M01" p:entreprise-ref="entreprise1" p:profilRemuneration-ref="profilRemuneration1" p:grade-ref="grade1"/>
 	
 	<bean id="bulletin1" class="dev.paie.entite.BulletinSalaire" p:primeExceptionnelle="1000" p:remunerationEmploye-ref="remunerationEmploye1"/>
-
-	<import resource="classpath:cotisations-non-imposables.xml" />
-	<import resource="classpath:cotisations-imposables.xml" />
 
 </beans>
