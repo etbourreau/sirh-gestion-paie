@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import dev.paie.config.JeuxDeDonneesConfig;
+import dev.paie.config.JpaConfig;
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.ResultatCalculRemuneration;
@@ -18,9 +19,10 @@ import dev.paie.entite.ResultatCalculRemuneration;
 @ContextConfiguration(classes = { ServicesConfig.class, JeuxDeDonneesConfig.class })
 @RunWith(SpringRunner.class)
 public class CalculerRemunerationServiceSimpleTest {
-
+	
 	@Autowired
 	private CalculerRemunerationService remunerationService;
+	
 	@Autowired
 	@Qualifier("bulletin1")
 	private BulletinSalaire bulletin;
@@ -34,5 +36,5 @@ public class CalculerRemunerationServiceSimpleTest {
 		assertThat(resultat.getNetImposable(), equalTo("2166.22"));
 		assertThat(resultat.getNetAPayer(), equalTo("2088.41"));
 	}
-
+	
 }
