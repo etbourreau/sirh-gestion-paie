@@ -29,7 +29,7 @@ public class GradeServiceJdbcTemplate implements GradeService {
 		String sql = "INSERT INTO grade(id, code, nbHeuresBase, tauxBase) VALUES(:id, :code, :heures, :taux)";
 		
 		Map<String,String> params = new HashMap<>();
-		params.put("id", nouveauGrade.getId().toString());
+		params.put("id", null);
 		params.put("code", nouveauGrade.getCode());
 		params.put("heures", nouveauGrade.getNbHeuresBase().toString());
 		params.put("taux", nouveauGrade.getTauxBase().toString());
@@ -60,6 +60,11 @@ public class GradeServiceJdbcTemplate implements GradeService {
 	public void truncate() {
 		String sql = "TRUNCATE grade";
 		this.jdbcTemplate.execute(sql, PreparedStatement::executeUpdate);
+	}
+
+	@Override
+	public Grade findOne(Integer id) {
+		return this.lister().stream().filter(g -> g.getId()==id).findAny().orElse(null);
 	}
 
 }

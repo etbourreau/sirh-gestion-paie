@@ -66,7 +66,7 @@
 				<db.url>jdbc:mysql://localhost:3306/sirh-paie?useSSL=false</db.url>
 				<db.user>sirh</db.user>
 				<db.pwd>sirh</db.pwd>
-				<schema-generation.database.action>none</schema-generation.database.action>
+				<schema-generation.database.action>drop-and-create</schema-generation.database.action>
 				<hibernate.dialect>org.hibernate.dialect.MySQL57InnoDBDialect</hibernate.dialect>
 			</properties>
 			<dependencies>
@@ -151,6 +151,27 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.11.3.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

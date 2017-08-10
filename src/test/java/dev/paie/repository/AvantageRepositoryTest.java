@@ -22,7 +22,6 @@ public class AvantageRepositoryTest {
 	
 	@Before
 	public void setUp(){
-		System.out.println(avantageRepository);
 	}
 	
 	@Test

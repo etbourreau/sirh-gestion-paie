@@ -9,4 +9,5 @@ public interface GradeService {
 	void mettreAJour(Grade grade);
 	List<Grade> lister();
 	void truncate();
+	Grade findOne(Integer g);
 }
