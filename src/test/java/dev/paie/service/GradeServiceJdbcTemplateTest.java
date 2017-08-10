@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import dev.paie.config.DataSourceMySQLConfig;
-import dev.paie.config.JpaConfig;
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Grade;
 
@@ -25,7 +23,6 @@ public class GradeServiceJdbcTemplateTest {
 	
 	@Before
 	public void setUp(){
-		gradeService.truncate();
 	}
 
 	@Test
@@ -41,8 +38,8 @@ public class GradeServiceJdbcTemplateTest {
 		
 		// TODO vérifier que les modifications sont bien prises en compte via la méthode lister
 		assertThat(gradeService.lister().get(0).getCode()).isEqualTo("RDP");
-		assertThat(gradeService.lister().get(0).getNbHeuresBase()).isEqualTo("32");
-		assertThat(gradeService.lister().get(0).getTauxBase()).isEqualTo("9.5");
+		assertThat(gradeService.lister().get(0).getNbHeuresBase()).isEqualTo("32.00");
+		assertThat(gradeService.lister().get(0).getTauxBase()).isEqualTo("9.50");
 		
 	}
 

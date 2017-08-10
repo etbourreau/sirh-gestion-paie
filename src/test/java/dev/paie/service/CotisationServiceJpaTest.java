@@ -23,7 +23,6 @@ public class CotisationServiceJpaTest {
 	
 	@Before
 	public void setUp(){
-		cotisationService.truncate();
 	}
 
 	@Test

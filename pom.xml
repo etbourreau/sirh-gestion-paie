@@ -41,9 +41,11 @@
 			</activation>
 			<properties>
 				<db.driver>org.h2.Driver</db.driver>
-				<db.url>jdbc:h2:~/sirh-paie;DB_CLOSE_DELAY=-1</db.url>
+				<db.url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</db.url>
 				<db.user>sa</db.user>
 				<db.pwd></db.pwd>
+				<schema-generation.database.action>create</schema-generation.database.action>
+				<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -64,6 +66,8 @@
 				<db.url>jdbc:mysql://localhost:3306/sirh-paie?useSSL=false</db.url>
 				<db.user>sirh</db.user>
 				<db.pwd>sirh</db.pwd>
+				<schema-generation.database.action>none</schema-generation.database.action>
+				<hibernate.dialect>org.hibernate.dialect.MySQL57InnoDBDialect</hibernate.dialect>
 			</properties>
 			<dependencies>
 				<dependency>
@@ -138,8 +142,8 @@
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.1.0.Final</version>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.10.Final</version>
 			<scope>runtime</scope>
 		</dependency>
 

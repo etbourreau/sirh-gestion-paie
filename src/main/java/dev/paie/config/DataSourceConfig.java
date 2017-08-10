@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @PropertySource("classpath:app.properties")
-public class DataSourceMySQLConfig {
+public class DataSourceConfig {
 
 	 @Value("${db.driver}")
 	 String driver;

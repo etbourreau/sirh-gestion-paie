@@ -5,8 +5,10 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySource("classpath:app.properties")
 public class JpaConfig {
 
 	@Bean
@@ -23,20 +26,25 @@ public class JpaConfig {
 		txManager.setEntityManagerFactory(emf);
 		return txManager;
 	}
+	
+
+	 @Value("${hibernate.dialect}")
+	 String dialect;
+	 @Value("${schema-generation.database.action}")
+	 String schemaGenerationDbAction;
 
 	@Bean
 	public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		//vendorAdapter.setGenerateDdl(true);
+		vendorAdapter.setGenerateDdl(true);
 		vendorAdapter.setShowSql(true);
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setPackagesToScan("dev.paie.entite");
 		factory.setDataSource(dataSource);
 		Properties jpaProperties = new Properties();
-		jpaProperties.setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
-		factory.setJpaProperties(jpaProperties);
-	    jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57InnoDBDialect");
+		jpaProperties.setProperty("javax.persistence.schema-generation.database.action", schemaGenerationDbAction);
+	    jpaProperties.setProperty("hibernate.dialect", dialect);
 		factory.setJpaProperties(jpaProperties);
 		factory.afterPropertiesSet();
 		return factory.getObject();
