@@ -15,7 +15,7 @@
 		<c:import url="../header.jsp"></c:import>
 		<div class="container">
 			<div class="row">
-				<a class="btn btn-info pull-right" href="<c:url value='/mvc/employes/creer'/>">Ajouter un employé</a>
+				<a class="btn btn-info pull-right" href="<c:url value='/mvc/bulletins/creer'/>">Ajouter un bulletin</a>
 			</div>
 			
 			<div class="row" style="margin-top: 15px;">
@@ -23,16 +23,24 @@
 					<thead>
 						<tr style="background: #f5f5f5;">
 							<td>Date/Heure création</td>
+							<td>Période</td>
 							<td>Matricule</td>
-							<td>Grade</td>
+							<td>Salaire brut</td>
+							<td>Net imposable</td>
+							<td>Net à payer</td>
+							<td>Actions</td>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="employe" items="${listeEmployes}">
+						<c:forEach var="bulletin" items="${listeBulletins}">
 							<tr>
-								<td>${employe.dateHeureCreation}</td>
-								<td>${employe.matricule}</td>
-								<td>${employe.grade.code}</td>
+								<td>${bulletin.key.dateHeureCreation}</td>
+								<td>${bulletin.key.periode.dateDebut} - ${bulletin.key.periode.dateFin}</td>
+								<td>${bulletin.key.remunerationEmploye.matricule}</td>
+								<td>${bulletin.value.salaireBrut}</td>
+								<td>${bulletin.value.netImposable}</td>
+								<td>${bulletin.value.netAPayer}</td>
+								<td><a class="btn btn-info" href="<c:url value='/mvc/bulletins/visualiser/${bulletin.key.id}'/>">Visualiser</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

@@ -3,6 +3,7 @@ package dev.paie.web.controller;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class RemunerationEmployeController {
 	private GradeService grades;
 
 	@RequestMapping(method = RequestMethod.GET)
+	@Secured({"ROLE_ADMINISTRATEUR", "ROLE_UTILISATEUR"})
 	public ModelAndView listerEmployes() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employes/listerEmployes");
@@ -40,9 +42,9 @@ public class RemunerationEmployeController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+	@Secured({"ROLE_ADMINISTRATEUR"})
 	public String creerEmploye(Model m) {
-		RemunerationEmploye employe = new RemunerationEmploye();
-		m.addAttribute("employe", employe);
+		m.addAttribute("titre", "Créer un employé");
 		m.addAttribute("listeEntreprises", entreprises.findAll());
 		m.addAttribute("listeProfils", profils.findAll());
 		m.addAttribute("listeGrades", grades.lister());
@@ -50,12 +52,13 @@ public class RemunerationEmployeController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
+	@Secured({"ROLE_ADMINISTRATEUR"})
 	public String creerEmploye(@RequestParam("matricule") String matricule,
 			@RequestParam("profil") Integer pr,
 			@RequestParam("grade") Integer g,
 			@RequestParam("entreprise") Integer e) {
 		if(matricule.isEmpty()){
-			return "employes/creerEmploye";
+			return "employes/creerEmploye?error=";
 		}else{
 			RemunerationEmploye employe = new RemunerationEmploye();
 			employe.setMatricule(matricule);

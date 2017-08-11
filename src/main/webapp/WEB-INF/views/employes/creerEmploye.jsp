@@ -1,7 +1,6 @@
-<%@page import="dev.paie.entite.RemunerationEmploye"%>
-<%@page import="dev.paie.entite.Grade"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,12 +10,21 @@
 	href="<c:url value='/res/bootstrap-3.3.7-dist/css/bootstrap.min.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/res/bootstrap-3.3.7-dist/js/bootstrap.min.js'/>">
+<script src="<c:url value='/res/jQuery/jquery-3.2.1.js'/>">alert("jQuery indisponible!");</script>
+	
 </head>
 <body>
 	<c:import url="../header.jsp"></c:import>
 	<div class="container">
+		<c:if test="${param.error != null}">
+			<div class="row alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				Nom d'utilisateur ou mot de passe invalide !
+			</div>
+		</c:if>
 		<form class="row form-horizontal" method="post">
-			<div class="form-group">
+			<sec:csrfInput/>
+			<div class="row form-group">
 				<label class="col-md-2 control-label" for="matricule">Matricule</label>
 				<div class="col-md-9">
 					<input id="matricule" name="matricule" type="text"
