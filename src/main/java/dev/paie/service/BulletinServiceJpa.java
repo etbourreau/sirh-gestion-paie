@@ -3,8 +3,6 @@ package dev.paie.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +18,6 @@ public class BulletinServiceJpa implements BulletinService {
 	@Autowired
 	CalculerRemunerationServiceSimple calcul;
 	
-	@Transactional
 	@Override
 	public Map<BulletinSalaire, ResultatCalculRemuneration> lister() {
 		Map<BulletinSalaire, ResultatCalculRemuneration> listeBulletins = new HashMap<>();
