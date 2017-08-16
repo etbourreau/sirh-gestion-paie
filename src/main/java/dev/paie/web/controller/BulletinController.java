@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.paie.entite.BulletinSalaire;
+import dev.paie.entite.ResultatCalculRemuneration;
 import dev.paie.repository.BulletinRepository;
 import dev.paie.repository.EmployeRepository;
 import dev.paie.repository.PeriodeRepository;
 import dev.paie.service.BulletinService;
+import dev.paie.service.CalculerRemunerationService;
 
 @Controller
 @RequestMapping("/bulletins")
@@ -31,6 +33,8 @@ public class BulletinController {
 	private PeriodeRepository periodes;
 	@Autowired
 	private EmployeRepository employes;
+	@Autowired
+	private CalculerRemunerationService remunerationService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Secured({"ROLE_ADMINISTRATEUR", "ROLE_UTILISATEUR"})
@@ -72,11 +76,40 @@ public class BulletinController {
 	
 	@RequestMapping(method=RequestMethod.GET, path = "/visualiser/{id}")
 	@Secured({"ROLE_ADMINISTRATEUR", "ROLE_UTILISATEUR"})
-	public String visualiserBulletin(@PathVariable Integer id){
-		if(bulletins.findOne(id)==null){
+	public String visualiserBulletin(@PathVariable Integer id, Model mv){
+		BulletinSalaire bulletin = bulletins.findOne(id);
+		if(bulletin==null){
 			return "redirect:/mvc/bulletins";
 		}else{
+			ResultatCalculRemuneration resultCalculRemun = remunerationService.calculer(bulletin);
 			
+			mv.addAttribute("titre", "Bulletin de salaire");
+			mv.addAttribute("bulletin", bulletin);
+			mv.addAttribute("resultCalculRemun", resultCalculRemun);
+			
+			BigDecimal totalRetenueMontantSalarial = bulletin
+					.getRemunerationEmploye()
+					.getProfilRemuneration()
+					.getCotisationsNonImposables()
+					.stream()
+					.filter(c -> c.getTauxSalarial() != null)
+					.map(c -> c.getTauxSalarial()
+							.multiply(new BigDecimal(resultCalculRemun.getSalaireBrut())))
+					.reduce(BigDecimal::add)
+					.orElse(BigDecimal.ZERO);
+			
+			BigDecimal totalRetenueCotisationsPatronales = bulletin
+					.getRemunerationEmploye()
+					.getProfilRemuneration()
+					.getCotisationsNonImposables()
+					.stream()
+					.filter(c -> c.getTauxPatronal() != null)
+					.map(c -> c.getTauxPatronal()
+							.multiply(new BigDecimal(resultCalculRemun.getSalaireBrut())))
+					.reduce(BigDecimal::add)
+					.orElse(BigDecimal.ZERO);
+			mv.addAttribute("totalRetenueMontantSalarial", totalRetenueMontantSalarial);
+			mv.addAttribute("totalRetenueCotisationsPatronales", totalRetenueCotisationsPatronales);
 			return "bulletins/visualiserBulletin";
 		}
 	}

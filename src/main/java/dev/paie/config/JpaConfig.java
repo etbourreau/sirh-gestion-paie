@@ -45,6 +45,7 @@ public class JpaConfig {
 		Properties jpaProperties = new Properties();
 		jpaProperties.setProperty("javax.persistence.schema-generation.database.action", schemaGenerationDbAction);
 	    jpaProperties.setProperty("hibernate.dialect", dialect);
+		jpaProperties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
 		factory.setJpaProperties(jpaProperties);
 		factory.afterPropertiesSet();
 		return factory.getObject();

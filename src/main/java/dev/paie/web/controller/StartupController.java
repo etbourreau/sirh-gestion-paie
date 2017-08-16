@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import dev.paie.service.InitialiserDonneesService;
 
 @Controller
-
 public class StartupController {
 	
 	@Autowired
